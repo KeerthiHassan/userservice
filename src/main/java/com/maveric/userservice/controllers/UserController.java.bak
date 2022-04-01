@@ -28,6 +28,13 @@ public class UserController {
         log.info("Updating user");
         return new ResponseEntity<UserResponse>(userService.updateUser(userId,updateUser),HttpStatus.OK);
     }
+	
+	@DeleteMapping("/users/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable("userId") String userId){
+        log.info("deleting user");
+        return new ResponseEntity<String>(userService.deleteUser(userId),HttpStatus.OK) ;
+    }
+   
 
     
 }
