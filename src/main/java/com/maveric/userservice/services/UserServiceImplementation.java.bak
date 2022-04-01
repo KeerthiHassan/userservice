@@ -102,7 +102,17 @@ public class UserServiceImplementation implements UserService {
          return "User successfully deleted";
     }
 
-
+@Override
+    public UserResponse getUserDetailsByEmail(String emailId) {
+        User user=userRepo.findByemail(emailId);
+        if(user==null)
+        {
+            log.info("User not found by email Id");
+            throw new UserNotExistsException("User not found with email Id: "+emailId);
+        }
+        log.info("user found successfully");
+        return setUserResponse(user);
+    }
     
 
     

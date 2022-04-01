@@ -23,9 +23,9 @@ public class UserController {
     UserService userService;
     
 	@GetMapping("/users")
-    public ResponseEntity<List<UserResponse>> getUsers(){
+    public ResponseEntity<List<UserResponse>> getUsers(@QueryParam("page") Integer page,@QueryParam("pageSize") Integer pageSize){
         log.info("Getting users");
-        return new ResponseEntity<List<UserResponse>>(userService.getUsers(), HttpStatus.OK);
+        return new ResponseEntity<List<UserResponse>>(userService.getUsers(page,pageSize), HttpStatus.OK);
     }
 	
 @PostMapping("/users")
