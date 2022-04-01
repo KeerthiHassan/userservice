@@ -22,10 +22,21 @@ public class UserController {
     @Autowired
     UserService userService;
     
+	@GetMapping("/users")
+    public ResponseEntity<List<UserResponse>> getUsers(){
+        log.info("Getting users");
+        return new ResponseEntity<List<UserResponse>>(userService.getUsers(), HttpStatus.OK);
+    }
+	
 @PostMapping("/users")
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody Userdto user){
         log.info("Creating user");
         return new ResponseEntity<UserResponse>(userService.createUser(user), HttpStatus.CREATED);
+    }
+	@GetMapping("/users/{userId}")
+    public ResponseEntity<UserResponse> getUsersById(@PathVariable("userId") String userId){
+        log.info("getting user details with Id");
+        return new ResponseEntity<UserResponse>(userService.getUserDetails(userId), HttpStatus.OK);
     }
 	
     @PutMapping("/users/{userId}")
@@ -40,6 +51,10 @@ public class UserController {
         return new ResponseEntity<String>(userService.deleteUser(userId),HttpStatus.OK) ;
     }
    
-
+@GetMapping("/users/getUserByEmail/{emailId}")
+    public ResponseEntity<UserResponse> getUserDetailsByEmail(@PathVariable("emailId") String emailId){
+        log.info("Getting details with email Id");
+        return new ResponseEntity<UserResponse>(userService.getUserDetailsByEmail(emailId), HttpStatus.OK);
+    }
     
 }
