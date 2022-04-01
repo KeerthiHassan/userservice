@@ -47,6 +47,34 @@ public class UserServiceImplementation implements UserService {
         return setUserResponse((userRepo.save(setUser(userdto))));
 
     }
+	
+	  @Override
+    public List<UserResponse> getUsers() {
+        
+        List<User> userList=userRepo.findAll();
+        List<UserResponse> userResponseList=new ArrayList<>();
+        if(userList.size()==0){
+            log.info("Users not found");
+            throw new UserDetailsNotPresent("No User Present at this time");
+        }
+
+        for(User user:userList){
+            userResponseList.add(setUserResponse(user));
+        }
+        log.info("Users fetched successfully");
+        return userResponseList;
+    }
+
+ @Override
+    public UserResponse getUserDetails(String userId) {
+    User user=userRepo.findByuserId(userId);
+        if (user == null){
+            log.info("User details not found");
+            throw new UserNotExistsException("User with id not Present");
+        }
+        log.info("User details fetched successfully");
+        return setUserResponse(user);
+    }
 
 
     @Override
@@ -74,7 +102,17 @@ public class UserServiceImplementation implements UserService {
          return "User successfully deleted";
     }
 
-
+@Override
+    public UserResponse getUserDetailsByEmail(String emailId) {
+        User user=userRepo.findByemail(emailId);
+        if(user==null)
+        {
+            log.info("User not found by email Id");
+            throw new UserNotExistsException("User not found with email Id: "+emailId);
+        }
+        log.info("user found successfully");
+        return setUserResponse(user);
+    }
     
 
     
