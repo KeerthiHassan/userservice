@@ -49,9 +49,9 @@ public class UserServiceImplementation implements UserService {
     }
 	
 	  @Override
-    public List<UserResponse> getUsers() {
-        
-        List<User> userList=userRepo.findAll();
+    public List<UserResponse> getUsers(Integer page,Integer pageSize) {
+        Pageable pageable= PageRequest.of(page,pageSize);
+        List<User> userList=userRepo.findAll(pageable).toList();
         List<UserResponse> userResponseList=new ArrayList<>();
         if(userList.size()==0){
             log.info("Users not found");

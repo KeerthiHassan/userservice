@@ -33,6 +33,11 @@ public class UserController {
         log.info("Creating user");
         return new ResponseEntity<UserResponse>(userService.createUser(user), HttpStatus.CREATED);
     }
+	@GetMapping("/users/{userId}")
+    public ResponseEntity<UserResponse> getUsersById(@PathVariable("userId") String userId){
+        log.info("getting user details with Id");
+        return new ResponseEntity<UserResponse>(userService.getUserDetails(userId), HttpStatus.OK);
+    }
 	
     @PutMapping("/users/{userId}")
     public  ResponseEntity<UserResponse> updateUser(@Valid @RequestBody Userdto updateUser, @PathVariable("userId") String userId){
