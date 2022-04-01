@@ -32,6 +32,23 @@ public class UserServiceImplementation implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 @LoadBalanced
 
+ @Override
+    public UserResponse createUser(Userdto userdto) {
+
+    if(!(userdto.getGender().equals(Gender.MALE)||userdto.getGender().equals(Gender.FEMALE))) {
+        log.info("provide valid gender");
+        throw new GenderNotValid("Please provide valid gender");
+    }
+    if(userRepo.findByemail(userdto.getEmail())!=null){
+        log.info("Provide different email");
+        throw new UserEmailAlreadyExist("Try with different email id");
+    }
+    log.info("user is getting saved to repo");
+        return setUserResponse((userRepo.save(setUser(userdto))));
+
+    }
+
+
     @Override
     public UserResponse updateUser(String userId, Userdto updateUser) {
 

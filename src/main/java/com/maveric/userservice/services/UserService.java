@@ -8,7 +8,8 @@ import com.maveric.userservice.model.User;
 import java.util.List;
 
 public interface UserService {
-    
+	
+    UserResponse createUser(Userdto user);
     UserResponse updateUser(String userId, Userdto updateUser);
 	String deleteUser(String userId);
      

@@ -45,6 +45,18 @@ public class UserServiceImplementation implements UserService {
                 updateUser.getBloodGroup(),updateUser.getEmail(),bCryptPasswordEncoder.encode(updateUser.getPassword()))));
 
     }
+	
+	@Override
+    public String deleteUser(String userId) {
+        if(userRepo.findByuserId(userId)==null){
+            log.info("user not found ,can't be deleted");
+            throw new UserNotExistsException("User cannot be deleted, user not Present");
+        }
+         userRepo.deleteById(userId);
+        log.info("user deleted successfully");
+         return "User successfully deleted";
+    }
+
 
     
 

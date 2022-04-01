@@ -22,7 +22,12 @@ public class UserController {
     @Autowired
     UserService userService;
     
-
+@PostMapping("/users")
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody Userdto user){
+        log.info("Creating user");
+        return new ResponseEntity<UserResponse>(userService.createUser(user), HttpStatus.CREATED);
+    }
+	
     @PutMapping("/users/{userId}")
     public  ResponseEntity<UserResponse> updateUser(@Valid @RequestBody Userdto updateUser, @PathVariable("userId") String userId){
         log.info("Updating user");
